@@ -3,6 +3,7 @@
     contains the entry point of the command interpreter:
 """
 import cmd
+import ast
 # import sys
 # import signal
 from models.base_model import BaseModel
@@ -79,11 +80,48 @@ class HBNBCommand(cmd.Cmd):
 
         print(obj_list)
 
+    def do_update(self, hbnb):
+        hbnb = hbnb.strip()
+        cmd_args = hbnb.split(" ")
+        if not cmd_args[0]:
+            print("** class name missing **")
+        elif cmd_args[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+        elif len(cmd_args) == 1 or not cmd_args[1]:
+            print("** instance id missing **")
+        elif not check_for_id(cmd_args[1], storage.all()):
+            print("** no instance found **")
+        elif len(cmd_args) == 2:
+            print("** attribute name missing **")
+        elif len(cmd_args) == 3:
+            print("** value missing **")
+        else:
+            obj = get_obj_from_id(cmd_args[1], storage.all())
+            setattr(obj, cmd_args[2].strip(), parse(cmd_args[3].strip()))
+            storage.save()
+
 
 def check_for_id(_id, obj_dict):
     for k, v in obj_dict.items():
         if v.to_dict()["id"] == _id:
             return (True)
+    return (False)
+
+
+def parse(value):
+    try:
+        parsed_value = ast.literal_eval(value)
+        if isinstance(parsed_value, str):
+            return parsed_value
+    except (ValueError, SyntaxError):
+        pass
+    return value
+
+
+def get_obj_from_id(_id, obj_dict):
+    for k, v in obj_dict.items():
+        if v.to_dict()["id"] == _id:
+            return (v)
     return (False)
 
 # def ctrlc(sig, handle):
