@@ -74,11 +74,13 @@ class HBNBCommand(cmd.Cmd):
                 for obj in storage.all().values():
                     if isinstance(obj, globals()[hbnb]):
                         obj_list.append(obj.__str__())
+                print(obj_list)
+            else:
+                print("** class doesn't exist **")
         else:
             for obj in storage.all().values():
                 obj_list.append(obj.__str__())
-
-        print(obj_list)
+            print(obj_list)
 
     def do_update(self, hbnb):
         hbnb = hbnb.strip()
