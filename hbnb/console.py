@@ -3,10 +3,11 @@
     contains the entry point of the command interpreter:
 """
 import cmd
-import sys
-import signal
+# import sys
+# import signal
 from models.base_model import BaseModel
 from models import storage
+
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
@@ -20,7 +21,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, hbnb):
         return True
-    
+
     def do_create(self, hbnb):
         if hbnb:
             if hbnb in HBNBCommand.__classes:
@@ -59,15 +60,17 @@ class HBNBCommand(cmd.Cmd):
             del storage.all()["<{}>.{}".format(cmd_args[0], cmd_args[1])]
             storage.save()
 
+
 def check_for_id(_id, obj_dict):
     for k, v in obj_dict.items():
         if v.to_dict()["id"] == _id:
             return (True)
     return (False)
 
-def ctrlc(sig, handle):
-    sys.exit(0)
+# def ctrlc(sig, handle):
+#     sys.exit(0)
+
 
 if __name__ == "__main__":
-    signal.signal(signal.SIGINT, ctrlc)
+    # signal.signal(signal.SIGINT, ctrlc)
     HBNBCommand().cmdloop()
