@@ -31,11 +31,15 @@ class FileStorage:
     def reload(self):
         try:
             from models.base_model import BaseModel
+            from models.user import User
             with open(self.__class__.__file_path, "r") as f:
                 line = f.read()
                 obj_dict = {k: v for k, v in json.loads(line).items()}
                 for j in obj_dict.values():
-                    new_bm = BaseModel(**j)
+                    if j["__class__"] == "BaseModel":
+                        new_bm = BaseModel(**j)
+                    elif j["__class__"] == "User":
+                        new_bm = User(**j)
                     self.new(new_bm)
 
         except FileNotFoundError as fnfe:

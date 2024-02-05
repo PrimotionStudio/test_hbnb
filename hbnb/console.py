@@ -7,6 +7,7 @@ import ast
 # import sys
 # import signal
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 from pprint import pprint
 
@@ -28,9 +29,12 @@ class HBNBCommand(cmd.Cmd):
         hbnb = hbnb.strip()
         if hbnb:
             if hbnb in HBNBCommand.__classes:
-                new_bm = BaseModel(hbnb)
-                new_bm.save()
-                print(new_bm.id)
+                try:
+                    new_bm = globals()[hbnb]()
+                    new_bm.save()
+                    print(new_bm.id)
+                except KeyError:
+                    print("** class doesn't exist **")
             else:
                 print("** class doesn't exist **")
         else:
@@ -48,7 +52,11 @@ class HBNBCommand(cmd.Cmd):
         elif not check_for_id(cmd_args[1], storage.all()):
             print("** no instance found **")
         else:
-            print(storage.all()["<{}>.{}".format(cmd_args[0], cmd_args[1])])
+            try:
+                print(storage.all()["<{}>.{}".format(
+                    cmd_args[0], cmd_args[1])])
+            except KeyError:
+                print("** no instance found **")
 
     def do_destroy(self, hbnb):
         hbnb = hbnb.strip()
@@ -62,11 +70,14 @@ class HBNBCommand(cmd.Cmd):
         elif not check_for_id(cmd_args[1], storage.all()):
             print("** no instance found **")
         else:
-            del storage.all()["<{}>.{}".format(cmd_args[0], cmd_args[1])]
-            storage.save()
+            try:
+                del storage.all()["<{}>.{}".format(cmd_args[0], cmd_args[1])]
+                storage.save()
+            except KeyError:
+                print("** no instance found **")
 
     def do_all(self, hbnb):
-        """Print all instances of all or acertain class."""
+        """Print all instances of all or a certain class."""
         hbnb = hbnb.strip()
         obj_list = []
         if hbnb:
