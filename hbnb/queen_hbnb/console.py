@@ -21,14 +21,14 @@ def parse(argument_string):
         else:
             # Brackets found, handle separately
             lexer_output =\
-                    split(argument_string[:bracket_content_match.span()[0]])
+                split(argument_string[:bracket_content_match.span()[0]])
             parsed_elements = [word.strip(",") for word in lexer_output]
             parsed_elements.append(bracket_content_match.group())
             return parsed_elements
     else:
         # Curly braces found, handle separately
         lexer_output =\
-                split(argument_string[:curly_brace_content_match.span()[0]])
+            split(argument_string[:curly_brace_content_match.span()[0]])
         parsed_elements = [word.strip(",") for word in lexer_output]
         parsed_elements.append(curly_brace_content_match.group())
         return parsed_elements
@@ -38,14 +38,14 @@ class HBNBCommand(cmd.Cmd):
     """Command interpreter for HBNB project"""
     prompt = "(hbnb) "
     __classes = {
-            "BaseModel",
-            "User",
-            "State",
-            "City",
-            "Place",
-            "Amenity",
-            "Review"
-            }
+        "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Place",
+        "Amenity",
+        "Review"
+    }
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -114,7 +114,7 @@ class HBNBCommand(cmd.Cmd):
             for obj in storage.all().values():
                 if len(argument) > 0 and argument[0] ==\
                         obj.__class__.__name__:
-                            obj_all.append(obj.__str__())
+                    obj_all.append(obj.__str__())
                 elif len(argument) == 0:
                     obj_all.append(obj.__str__())
             print(obj_all)
@@ -158,7 +158,7 @@ class HBNBCommand(cmd.Cmd):
             for key, value in eval(argument[2]).items():
                 if (key in obj.__class__.__dict__.keys()) and\
                         type(obj.__class__.__dict__[key] in {str, int, float}):
-                            value_type = type(obj.__class__.__dict__[key])
+                    value_type = type(obj.__class__.__dict__[key])
                     obj.__dict__[key] = value_type(value)
                 else:
                     obj.__dict__[key] = value
@@ -167,4 +167,3 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
-
