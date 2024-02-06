@@ -31,12 +31,22 @@ class FileStorage:
     def reload(self):
         try:
             from models.base_model import BaseModel
+            from models.user import User
+            from models.amenity import Amenity
+            from models.city import City
+            from models.place import Place
+            from models.review import Review
+            from models.state import State
+
             with open(self.__class__.__file_path, "r") as f:
                 line = f.read()
                 obj_dict = {k: v for k, v in json.loads(line).items()}
                 for j in obj_dict.values():
-                    new_bm = BaseModel(**j)
-                    self.new(new_bm)
+                    try:
+                        new_bm = locals()[j["__class__"]](**j)
+                        self.new(new_bm)
+                    except KeyError:
+                        pass
 
         except FileNotFoundError as fnfe:
             pass

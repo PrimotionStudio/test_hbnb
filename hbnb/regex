@@ -1,0 +1,40 @@
+import json
+import re
+
+def parse_text_string(input_string):
+    result = []
+    
+    # Regular expression to match the three possible formats
+    # Using non-greedy quantifiers in the regex
+    regex = r'text\((.*?)\)'
+    match = re.match(regex, input_string)
+
+    if match:
+        # Extracting the captured groups from the regex match
+        arg1, arg2 = map(str.strip, match.group(1).split(',', 1) if match.group(1) else (None, None))
+
+        # Pushing the matched values into the result list
+        result.append("text")
+        
+        if arg1:
+            result.append(arg1)
+
+        if arg2:
+            try:
+                # Parsing the second argument as JSON
+                result.append(json.loads(arg2))
+            except json.JSONDecodeError:
+                # Handling JSON parse error, treating it as a string
+                result.append(arg2)
+
+    return result
+
+# Example usage:
+input_string1 = 'text()'
+input_string2 = 'text("something inside double or quotes")'
+input_string3 = 'text("something inside double or quotes", { "something thats looks like a dictionary": "but is actually a string and will be later converted to dictionary in the converted list"})'
+
+print(parse_text_string(input_string1))
+print(parse_text_string(input_string2))
+print(parse_text_string(input_string3))
+
