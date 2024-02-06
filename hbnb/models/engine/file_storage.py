@@ -65,5 +65,5 @@ class FileStorage:
                     except KeyError:
                         pass
 
-        except FileNotFoundError as fnfe:
+        except (json.decoder.JSONDecodeError, FileNotFoundError):
             pass
