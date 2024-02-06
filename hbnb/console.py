@@ -4,17 +4,23 @@
 """
 import cmd
 import ast
-# import sys
-# import signal
+import sys
+import signal
 from models.base_model import BaseModel
 from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 from models import storage
 from pprint import pprint
 
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
-    __classes = ["BaseModel", "User"]
+    __classes = ["BaseModel", "User", "Place",
+                 "State", "City", "Amenity", "Review"]
 
     def emptyline(self):
         pass
@@ -137,10 +143,12 @@ def get_obj_from_id(_id, obj_dict):
             return (v)
     return (False)
 
-# def ctrlc(sig, handle):
-#     sys.exit(0)
 
-# signal.signal(signal.SIGINT, ctrlc)
+def ctrlc(sig, handle):
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, ctrlc)
 
 
 if __name__ == "__main__":
