@@ -4,6 +4,7 @@ blah blah blah
 """
 from models.base_model import BaseModel
 
+
 class Review(BaseModel):
 
     def __init__(self, place_id="", user_id="", text="", *args, **kwargs):
