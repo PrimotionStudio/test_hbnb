@@ -158,7 +158,7 @@ class HBNBCommand(cmd.Cmd):
             for key, value in eval(argument[2]).items():
                 if (key in obj.__class__.__dict__.keys()) and\
                         type(obj.__class__.__dict__[key] in {str, int, float}):
-                            value_type = type(obj.__class__.__dict__[key])
+                    value_type = type(obj.__class__.__dict__[key])
                     obj.__dict__[key] = value_type(value)
                 else:
                     obj.__dict__[key] = value
