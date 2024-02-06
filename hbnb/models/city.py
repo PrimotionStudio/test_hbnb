@@ -4,6 +4,7 @@ blah blah blah
 """
 from models.base_model import BaseModel
 
+
 class City(BaseModel):
 
     def __init__(self, state_id="", name="", *args, **kwargs):
