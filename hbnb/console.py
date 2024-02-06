@@ -18,14 +18,24 @@ from pprint import pprint
 
 
 class HBNBCommand(cmd.Cmd):
+    """
+    The class that represents the Hotel Booking
+    System Command Interpreter (CMD).
+    """
     prompt = "(hbnb) "
     __classes = ["BaseModel", "User", "Place",
                  "State", "City", "Amenity", "Review"]
 
     def emptyline(self):
+        """
+        Overridden from Cmd base class to ignore empty lines.
+        """
         pass
 
     def default(self, hbnb):
+        """
+        Prints an error message when a wrong command is entered.
+        """
         line = hbnb
         hbnb = hbnb.split(".")
         if hbnb[0] in HBNBCommand.__classes:
@@ -35,12 +45,21 @@ class HBNBCommand(cmd.Cmd):
             self.stdout.write('*** Unknown syntax: %s\n' % line)
 
     def do_EOF(self, hbnb):
+        """
+        Exits the program on EOF.
+        """
         return True
 
     def do_quit(self, hbnb):
+        """
+        Quit the hotel booking system CLI.
+        """
         return True
 
     def do_create(self, hbnb):
+        """
+        Creates a new object instance for BaseModel or one of its subclasses.
+        """
         hbnb = hbnb.strip()
         if hbnb:
             if hbnb in HBNBCommand.__classes:
@@ -56,6 +75,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_show(self, hbnb):
+        """
+        Show an existing object by ID.
+        """
         hbnb = hbnb.strip()
         cmd_args = hbnb.split(" ")
         if not cmd_args[0]:
@@ -74,6 +96,9 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_destroy(self, hbnb):
+        """
+        Delete an existing object by ID.
+        """
         hbnb = hbnb.strip()
         cmd_args = hbnb.split(" ")
         if not cmd_args[0]:
@@ -109,6 +134,10 @@ class HBNBCommand(cmd.Cmd):
             print(obj_list)
 
     def do_update(self, hbnb):
+        """
+        Update the fields of an existing object by ID.
+        Fields to update must be provided as key
+        """
         hbnb = hbnb.strip()
         cmd_args = hbnb.split(" ")
         if not cmd_args[0]:
@@ -130,6 +159,9 @@ class HBNBCommand(cmd.Cmd):
 
 
 def check_for_id(_id, obj_dict):
+    """
+    Check if a given _id exists in a dictionary of objects
+    """
     for k, v in obj_dict.items():
         if v.to_dict()["id"] == _id:
             return (True)
@@ -137,6 +169,10 @@ def check_for_id(_id, obj_dict):
 
 
 def parse(value):
+    """
+    Convert string input into appropriate
+    Python data type based on its contents
+    """
     try:
         parsed_value = ast.literal_eval(value)
         if isinstance(parsed_value, str):
@@ -147,6 +183,10 @@ def parse(value):
 
 
 def get_obj_from_id(_id, obj_dict):
+    """
+    Retrieve an object from the provided list
+    of dictionaries using the "id" field as key
+    """
     for k, v in obj_dict.items():
         if v.to_dict()["id"] == _id:
             return (v)
@@ -154,11 +194,14 @@ def get_obj_from_id(_id, obj_dict):
 
 
 def ctrlc(sig, handle):
+    """
+    Handle Ctrl+C signal by printing out current
+    state and exiting program gracefully
+    """
     sys.exit(0)
 
 
 signal.signal(signal.SIGINT, ctrlc)
-
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
