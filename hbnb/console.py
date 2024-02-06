@@ -39,8 +39,10 @@ class HBNBCommand(cmd.Cmd):
         line = hbnb
         hbnb = hbnb.split(".")
         if hbnb[0] in HBNBCommand.__classes:
-            print("{} is a subset of {}".format(
-                hbnb[0], HBNBCommand.__classes))
+            if hbnb[1] == "all()":
+                self.do_all(hbnb[0])
+            elif hbnb[1] == "count()":
+                self.do_count(hbnb[0])
         else:
             self.stdout.write('*** Unknown syntax: %s\n' % line)
 
@@ -58,7 +60,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, hbnb):
         """
-        Creates a new object instance for BaseModel or one of its subclasses.
+        Creates a new object instance for BaseModel
+        or one of its subclasses.
         """
         hbnb = hbnb.strip()
         if hbnb:
@@ -117,7 +120,10 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, hbnb):
-        """Print all instances of all or a certain class."""
+        """
+        Print all instances of all or a certain class.
+        Usage: all [classname]
+        """
         hbnb = hbnb.strip()
         obj_list = []
         if hbnb:
@@ -156,6 +162,13 @@ class HBNBCommand(cmd.Cmd):
             obj = get_obj_from_id(cmd_args[1], storage.all())
             setattr(obj, cmd_args[2].strip(), parse(cmd_args[3].strip()))
             storage.save()
+
+    def do_count(self, hbnb):
+        """
+        """
+        hbnb = hbnb.strip()
+        pprint(globals())
+        print(globals()[hbnb].__inst)
 
 
 def check_for_id(_id, obj_dict):
