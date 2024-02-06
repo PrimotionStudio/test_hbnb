@@ -25,6 +25,15 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         pass
 
+    def default(self, hbnb):
+        line = hbnb
+        hbnb = hbnb.split(".")
+        if hbnb[0] in HBNBCommand.__classes:
+            print("{} is a subset of {}".format(
+                hbnb[0], HBNBCommand.__classes))
+        else:
+            self.stdout.write('*** Unknown syntax: %s\n' % line)
+
     def do_EOF(self, hbnb):
         return True
 

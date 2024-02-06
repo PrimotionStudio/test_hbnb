@@ -1,1 +1,37 @@
-{"<User>.5dc75346-1c98-4860-8d91-608e555d436b": {"__class__": "User", "id": "5dc75346-1c98-4860-8d91-608e555d436b", "created_at": "2024-02-05T15:13:45.622136", "updated_at": "2024-02-05T15:13:45.622149", "email": "airbnb2@mail.com", "password": "root", "first_name": "John", "last_name": ""}, "<BaseModel>.ddca17fc-4a2c-49d0-ae10-dd895868d780": {"__class__": "BaseModel", "id": "ddca17fc-4a2c-49d0-ae10-dd895868d780", "created_at": "2024-02-05T15:14:35.390675", "updated_at": "2024-02-05T15:14:35.390693", "name": "My_First_Model", "my_number": 89}, "<Place>.61cd46ae-66d6-4af1-9879-e5a49ce95e4a": {"__class__": "Place", "id": "61cd46ae-66d6-4af1-9879-e5a49ce95e4a", "created_at": "2024-02-06T01:31:35.052548", "updated_at": "2024-02-06T01:31:35.052591", "city_id": "", "user_id": "", "name": "MyHome", "description": "", "number_rooms": 0, "number_bathrooms": 0, "max_guest": 0, "price_by_night": 0, "latitude": 0.0, "longitude": 0.0, "amenity_ids": []}}
+{
+	"<User>.5dc75346-1c98-4860-8d91-608e555d436b": {
+		"__class__": "User",
+		"id": "5dc75346-1c98-4860-8d91-608e555d436b",
+		"created_at": "2024-02-05T15:13:45.622136",
+		"updated_at": "2024-02-05T15:13:45.622149",
+		"email": "airbnb2@mail.com",
+		"password": "root",
+		"first_name": "John",
+		"last_name": ""
+	},
+	"<BaseModel>.ddca17fc-4a2c-49d0-ae10-dd895868d780": {
+		"__class__": "BaseModel",
+		"id": "ddca17fc-4a2c-49d0-ae10-dd895868d780",
+		"created_at": "2024-02-05T15:14:35.390675",
+		"updated_at": "2024-02-05T15:14:35.390693",
+		"name": "My_First_Model",
+		"my_number": 89
+	},
+	"<Place>.61cd46ae-66d6-4af1-9879-e5a49ce95e4a": {
+		"__class__": "Place",
+		"id": "61cd46ae-66d6-4af1-9879-e5a49ce95e4a",
+		"created_at": "2024-02-06T01:31:35.052548",
+		"updated_at": "2024-02-06T01:31:35.052591",
+		"city_id": "",
+		"user_id": "",
+		"name": "MyHome",
+		"description": "",
+		"number_rooms": 0,
+		"number_bathrooms": 0,
+		"max_guest": 0,
+		"price_by_night": 0,
+		"latitude": 0.0,
+		"longitude": 0.0,
+		"amenity_ids": []
+	}
+}
