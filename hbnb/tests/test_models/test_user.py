@@ -2,8 +2,10 @@
 """Test module for User class"""
 
 import unittest
-from models.user import User
 from datetime import datetime
+import sys
+sys.path.append('../../')
+from models.user import User
 
 
 class TestUser(unittest.TestCase):
@@ -43,7 +45,7 @@ class TestUser(unittest.TestCase):
         self.assertIsInstance(self.user.created_at, datetime)
         self.assertIsInstance(self.user.updated_at, datetime)
         self.assertAlmostEqual(
-                self.user.created_at, self.user.updated_at, delta=datetime.utcnow())
+            self.user.created_at, self.user.updated_at, delta=datetime.utcnow())
 
         def test_to_dict_method(self):
             user_dict = self.user.to_dict()
@@ -54,8 +56,10 @@ class TestUser(unittest.TestCase):
         self.assertIn("updated_at", user_dict)
         self.assertEqual(user_dict['__class__'], 'User')
         self.assertEqual(user_dict['id'], self.user.id)
-        self.assertEqual(user_dict['created_at'], self.user.created_at.isoformat())
-        self.assertEqual(user_dict['updated_at'], self.user.updated_at.isoformat())
+        self.assertEqual(user_dict['created_at'],
+                         self.user.created_at.isoformat())
+        self.assertEqual(user_dict['updated_at'],
+                         self.user.updated_at.isoformat())
 
 
 if __name__ == '__main__':

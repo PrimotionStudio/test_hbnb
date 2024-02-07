@@ -2,8 +2,10 @@
 """Test module for Place class"""
 
 import unittest
-from models.place import Place
 from datetime import datetime
+import sys
+sys.path.append('../../')
+from models.place import Place
 
 
 class TestPlace(unittest.TestCase):

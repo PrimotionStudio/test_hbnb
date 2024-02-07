@@ -2,8 +2,10 @@
 """Test module for Review class"""
 
 import unittest
-from models.review import Review
 from datetime import datetime
+import sys
+sys.path.append('../../')
+from models.review import Review
 
 
 class TestReview(unittest.TestCase):
@@ -30,7 +32,8 @@ class TestReview(unittest.TestCase):
         self.assertIsInstance(self.review, BaseModel)
 
     def test_str_method(self):
-        expected = "[Review] ({}) {}".format(self.review.id, self.review.__dict__)
+        expected = "[Review] ({}) {}".format(
+            self.review.id, self.review.__dict__)
         self.assertEqual(str(self.review), expected)
 
     def test_created_at_and_updated_at(self):
@@ -39,7 +42,7 @@ class TestReview(unittest.TestCase):
         self.assertIsInstance(self.review.created_at, datetime)
         self.assertIsInstance(self.review.updated_at, datetime)
         self.assertAlmostEqual(
-                self.review.created_at, self.review.updated_at, delta=datetime.utcnow())
+            self.review.created_at, self.review.updated_at, delta=datetime.utcnow())
 
         def test_to_dict_method(self):
             review_dict = self.review.to_dict()
@@ -50,8 +53,10 @@ class TestReview(unittest.TestCase):
         self.assertIn("updated_at", review_dict)
         self.assertEqual(review_dict['__class__'], 'Review')
         self.assertEqual(review_dict['id'], self.review.id)
-        self.assertEqual(review_dict['created_at'], self.review.created_at.isoformat())
-        self.assertEqual(review_dict['updated_at'], self.review.updated_at.isoformat())
+        self.assertEqual(review_dict['created_at'],
+                         self.review.created_at.isoformat())
+        self.assertEqual(review_dict['updated_at'],
+                         self.review.updated_at.isoformat())
 
 
 if __name__ == '__main__':

@@ -2,8 +2,10 @@
 """Test module for City class"""
 
 import unittest
-from models.city import City
 from datetime import datetime
+import sys
+sys.path.append('../../')
+from models.city import City
 
 
 class TestCity(unittest.TestCase):
@@ -35,7 +37,7 @@ class TestCity(unittest.TestCase):
         self.assertIsInstance(self.city.created_at, datetime)
         self.assertIsInstance(self.city.updated_at, datetime)
         self.assertAlmostEqual(
-                self.city.created_at, self.city.updated_at, delta=datetime.utcnow())
+            self.city.created_at, self.city.updated_at, delta=datetime.utcnow())
 
         def test_to_dict_method(self):
             city_dict = self.city.to_dict()
@@ -46,8 +48,10 @@ class TestCity(unittest.TestCase):
         self.assertIn("updated_at", city_dict)
         self.assertEqual(city_dict['__class__'], 'City')
         self.assertEqual(city_dict['id'], self.city.id)
-        self.assertEqual(city_dict['created_at'], self.city.created_at.isoformat())
-        self.assertEqual(city_dict['updated_at'], self.city.updated_at.isoformat())
+        self.assertEqual(city_dict['created_at'],
+                         self.city.created_at.isoformat())
+        self.assertEqual(city_dict['updated_at'],
+                         self.city.updated_at.isoformat())
 
 
 if __name__ == '__main__':

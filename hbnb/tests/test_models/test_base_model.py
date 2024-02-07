@@ -2,11 +2,12 @@
 """Test Module for BaseModel class"""
 
 import unittest
-from models.base_model import BaseModel
 from datetime import datetime
 from unittest.mock import patch
 from io import StringIO
-
+import sys
+sys.path.append('../../')
+from models.base_model import BaseModel
 
 class TestBaseModel(unittest.TestCase):
 
@@ -32,10 +33,11 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(self.model.created_at, datetime)
         self.assertIsInstance(self.model.updated_at, datetime)
         self.assertAlmostEqual(
-                self.model.created_at, self.model.updated_at, delta=datetime.utcnow())
+            self.model.created_at, self.model.updated_at, delta=datetime.utcnow())
 
         def test_str_method(self):
-            expected = "[BaseModel] ({}) {}".format(self.model.id, self.model.__dict__)
+            expected = "[BaseModel] ({}) {}".format(
+                self.model.id, self.model.__dict__)
         self.assertEqual(str(self.model), expected)
 
     @patch('sys.stdout', new_callable=StringIO)
@@ -54,8 +56,10 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn("updated_at", model_dict)
         self.assertEqual(model_dict['__class__'], 'BaseModel')
         self.assertEqual(model_dict['id'], self.model.id)
-        self.assertEqual(model_dict['created_at'], self.model.created_at.isoformat())
-        self.assertEqual(model_dict['updated_at'], self.model.updated_at.isoformat())
+        self.assertEqual(model_dict['created_at'],
+                         self.model.created_at.isoformat())
+        self.assertEqual(model_dict['updated_at'],
+                         self.model.updated_at.isoformat())
 
 
 if __name__ == '__main__':

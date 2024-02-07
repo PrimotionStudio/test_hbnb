@@ -5,6 +5,8 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from io import StringIO
+import sys
+sys.path.append('../')
 from console import HBNBCommand
 
 
@@ -31,7 +33,8 @@ class TestHBNBCommand(unittest.TestCase):
     def test_create_command(self, mock_stdout):
         with patch('builtins.input', side_effect=['create BaseModel', 'EOF']):
             self.console.cmdloop()
-            self.assertIn("Please enter a class name and its attributes", mock_stdout.getvalue())
+            self.assertIn(
+                "Please enter a class name and its attributes", mock_stdout.getvalue())
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_show_command(self, mock_stdout):
@@ -63,7 +66,8 @@ class TestHBNBCommand(unittest.TestCase):
     def test_help_specific_command(self, mock_stdout):
         with patch('builtins.input', side_effect=['help create', 'EOF']):
             self.console.cmdloop()
-            self.assertIn("Create a new instance of BaseModel", mock_stdout.getvalue())
+            self.assertIn("Create a new instance of BaseModel",
+                          mock_stdout.getvalue())
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_create_invalid_class(self, mock_stdout):

@@ -2,8 +2,10 @@
 """Test Module for State"""
 
 import unittest
-from models.state import State
 from datetime import datetime
+import sys
+sys.path.append('../../')
+from models.state import State
 
 
 class TestState(unittest.TestCase):
@@ -31,7 +33,7 @@ class TestState(unittest.TestCase):
         self.assertIsInstance(self.state.created_at, datetime)
         self.assertIsInstance(self.state.updated_at, datetime)
         self.assertAlmostEqual(
-                self.state.created_at, self.state.updated_at, delta=datetime.utcnow())
+            self.state.created_at, self.state.updated_at, delta=datetime.utcnow())
 
         def test_to_dict_method(self):
             state_dict = self.state.to_dict()
@@ -42,8 +44,10 @@ class TestState(unittest.TestCase):
         self.assertIn("updated_at", state_dict)
         self.assertEqual(state_dict['__class__'], 'State')
         self.assertEqual(state_dict['id'], self.state.id)
-        self.assertEqual(state_dict['created_at'], self.state.created_at.isoformat())
-        self.assertEqual(state_dict['updated_at'], self.state.updated_at.isoformat())
+        self.assertEqual(state_dict['created_at'],
+                         self.state.created_at.isoformat())
+        self.assertEqual(state_dict['updated_at'],
+                         self.state.updated_at.isoformat())
 
 
 if __name__ == '__main__':
