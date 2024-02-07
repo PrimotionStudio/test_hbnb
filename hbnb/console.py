@@ -43,6 +43,8 @@ class HBNBCommand(cmd.Cmd):
                 self.do_all(hbnb[0])
             elif hbnb[1] == "count()":
                 self.do_count(hbnb[0])
+            else:
+                self.stdout.write('*** Unknown syntax: %s\n' % line)
         else:
             self.stdout.write('*** Unknown syntax: %s\n' % line)
 
@@ -167,8 +169,7 @@ class HBNBCommand(cmd.Cmd):
         """
         """
         hbnb = hbnb.strip()
-        pprint(globals())
-        print(globals()[hbnb].__inst)
+        print(globals()[hbnb].inst)
 
 
 def check_for_id(_id, obj_dict):

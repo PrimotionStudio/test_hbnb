@@ -10,11 +10,11 @@ class Amenity(BaseModel):
     Amenity Class that inheritrs from BaseModel
     """
 
-    __inst = 0
+    inst = 0
     def __init__(self, name="", *args, **kwargs):
         """
         Initialize a new instance of the Amenity class.
         """
         super().__init__(*args, **kwargs)
         self.name = name
-        Amenity.__inst += 1
+        Amenity.inst += 1

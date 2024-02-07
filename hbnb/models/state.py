@@ -10,12 +10,12 @@ class State(BaseModel):
     Class representing a State object in the database
     """
 
-    __inst = 0
+    inst = 0
 
     def __init__(self, name="", *args, **kwargs):
         """
         Initialize a new instance of the State class
         """
-        State.__inst += 1
         super().__init__(*args, **kwargs)
         self.name = name
+        State.inst += 1
