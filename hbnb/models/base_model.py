@@ -13,6 +13,8 @@ class BaseModel(cmd.Cmd):
     This is a base class for handling commands in the HBNB Console
     """
 
+    inst = 0
+
     def __init__(self, *args, **kwargs):
         """
         Constructor for initializing the BaseModel object
@@ -32,6 +34,7 @@ class BaseModel(cmd.Cmd):
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
             storage.new(self)
+            BaseModel.inst += 1
 
     def __str__(self):
         """

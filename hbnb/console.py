@@ -4,8 +4,6 @@
 """
 import cmd
 import ast
-import sys
-import signal
 from models.base_model import BaseModel
 from models.user import User
 from models.amenity import Amenity
@@ -14,7 +12,6 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models import storage
-from pprint import pprint
 
 
 class HBNBCommand(cmd.Cmd):
@@ -39,8 +36,12 @@ class HBNBCommand(cmd.Cmd):
         line = hbnb
         hbnb = hbnb.split(".")
         if hbnb[0] in HBNBCommand.__classes:
-            print("{} is a subset of {}".format(
-                hbnb[0], HBNBCommand.__classes))
+            if hbnb[1] == "all()":
+                self.do_all(hbnb[0])
+            elif hbnb[1] == "count()":
+                self.do_count(hbnb[0])
+            else:
+                self.stdout.write('*** Unknown syntax: %s\n' % line)
         else:
             self.stdout.write('*** Unknown syntax: %s\n' % line)
 
@@ -58,7 +59,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, hbnb):
         """
-        Creates a new object instance for BaseModel or one of its subclasses.
+        Creates a new object instance for BaseModel
+        or one of its subclasses.
         """
         hbnb = hbnb.strip()
         if hbnb:
@@ -117,7 +119,10 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, hbnb):
-        """Print all instances of all or a certain class."""
+        """
+        Print all instances of all or a certain class.
+        Usage: all [classname]
+        """
         hbnb = hbnb.strip()
         obj_list = []
         if hbnb:
@@ -157,6 +162,12 @@ class HBNBCommand(cmd.Cmd):
             setattr(obj, cmd_args[2].strip(), parse(cmd_args[3].strip()))
             storage.save()
 
+    def do_count(self, hbnb):
+        """
+        """
+        hbnb = hbnb.strip()
+        print(globals()[hbnb].inst)
+
 
 def check_for_id(_id, obj_dict):
     """
@@ -192,16 +203,6 @@ def get_obj_from_id(_id, obj_dict):
             return (v)
     return (False)
 
-
-def ctrlc(sig, handle):
-    """
-    Handle Ctrl+C signal by printing out current
-    state and exiting program gracefully
-    """
-    sys.exit(0)
-
-
-signal.signal(signal.SIGINT, ctrlc)
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

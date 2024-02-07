@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Author : karyna <karyna@localhost>
+Module that contains file storage initialization code
 """
 from models.engine.file_storage import FileStorage
 

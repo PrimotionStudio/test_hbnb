@@ -10,6 +10,8 @@ class Review(BaseModel):
     Class representing a Review object in the database
     """
 
+    inst = 0
+
     def __init__(self, place_id="", user_id="", text="", *args, **kwargs):
         """
         Initialize a new instance of the Review class
@@ -18,3 +20,4 @@ class Review(BaseModel):
         self.place_id = place_id
         self.user_id = user_id
         self.text = text
+        Review.inst += 1
