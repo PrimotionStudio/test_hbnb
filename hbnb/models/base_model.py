@@ -41,7 +41,7 @@ class BaseModel(cmd.Cmd):
         Returns a string representation of an instance of the BaseModel class
         :return: A string representing the instance of the BaseModel class
         """
-        return ("[{}] ({}) <{}>".format(self.__class__.__name__,
+        return ("[{}] ({}) {}".format(self.__class__.__name__,
                                         self.id, self.__dict__))
 
     def save(self):
