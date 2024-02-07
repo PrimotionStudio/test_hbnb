@@ -6,4 +6,4 @@ from models.base_model import BaseModel
 
 class State(BaseModel):
     """State class and the attributes"""
-    name = "" 
+    name = ""
