@@ -4,8 +4,6 @@
 """
 import cmd
 import ast
-import sys
-import signal
 from models.base_model import BaseModel
 from models.user import User
 from models.amenity import Amenity
@@ -14,7 +12,6 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models import storage
-from pprint import pprint
 
 
 class HBNBCommand(cmd.Cmd):
@@ -206,16 +203,6 @@ def get_obj_from_id(_id, obj_dict):
             return (v)
     return (False)
 
-
-def ctrlc(sig, handle):
-    """
-    Handle Ctrl+C signal by printing out current
-    state and exiting program gracefully
-    """
-    sys.exit(0)
-
-
-signal.signal(signal.SIGINT, ctrlc)
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
