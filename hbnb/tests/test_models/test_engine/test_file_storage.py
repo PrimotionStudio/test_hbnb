@@ -5,9 +5,11 @@ Test cases for FileStorage class
 
 import os
 import json
-import models
 import unittest
 from datetime import datetime
+import sys
+sys.path.append('../../../')
+import models
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models.user import User
@@ -98,19 +100,19 @@ class TestFileStorageMethods(unittest.TestCase):
         models.storage.new(amenity)
         models.storage.new(review)
         objects = models.storage.all()
-        self.assertIn("BaseModel." + base_model.id, objects.keys())
+        self.assertIn("<BaseModel>." + base_model.id, objects.keys())
         self.assertIn(base_model, objects.values())
-        self.assertIn("User." + user.id, objects.keys())
+        self.assertIn("<User>." + user.id, objects.keys())
         self.assertIn(user, objects.values())
-        self.assertIn("State." + state.id, objects.keys())
+        self.assertIn("<State>." + state.id, objects.keys())
         self.assertIn(state, objects.values())
-        self.assertIn("Place." + place.id, objects.keys())
+        self.assertIn("<Place>." + place.id, objects.keys())
         self.assertIn(place, objects.values())
-        self.assertIn("City." + city.id, objects.keys())
+        self.assertIn("<City>." + city.id, objects.keys())
         self.assertIn(city, objects.values())
-        self.assertIn("Amenity." + amenity.id, objects.keys())
+        self.assertIn("<Amenity>." + amenity.id, objects.keys())
         self.assertIn(amenity, objects.values())
-        self.assertIn("Review." + review.id, objects.keys())
+        self.assertIn("<Review>." + review.id, objects.keys())
         self.assertIn(review, objects.values())
 
     def test_save_method(self):
@@ -169,13 +171,13 @@ class TestFileStorageMethods(unittest.TestCase):
         models.storage.save()
         models.storage.reload()
         objects = FileStorage._FileStorage__objects
-        self.assertIn("BaseModel." + base_model.id, objects)
-        self.assertIn("User." + user.id, objects)
-        self.assertIn("State." + state.id, objects)
-        self.assertIn("Place." + place.id, objects)
-        self.assertIn("City." + city.id, objects)
-        self.assertIn("Amenity." + amenity.id, objects)
-        self.assertIn("Review." + review.id, objects)
+        self.assertIn("<BaseModel>." + base_model.id, objects)
+        self.assertIn("<User>." + user.id, objects)
+        self.assertIn("<State>." + state.id, objects)
+        self.assertIn("<Place>." + place.id, objects)
+        self.assertIn("<City>." + city.id, objects)
+        self.assertIn("<Amenity>." + amenity.id, objects)
+        self.assertIn("<Review>." + review.id, objects)
 
 
 if __name__ == "__main__":

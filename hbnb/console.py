@@ -36,7 +36,41 @@ class HBNBCommand(cmd.Cmd):
         line = hbnb
         hbnb = hbnb.split(".")
         if hbnb[0] in HBNBCommand.__classes:
-            if hbnb[1] == "all()":
+            if hbnb[1].startswith("show("):
+                if (hbnb[1])[-1] == ")":
+                    arg = parse((hbnb[1])[5:-1])
+                    try:
+                        print(storage.all()["<{}>.{}".format(
+                            hbnb[0], arg)])
+                    except KeyError:
+                        print("** no instance found **")
+                else:
+                    self.stdout.write('*** Unknown syntax: %s\n' % line)
+            elif hbnb[1].startswith("destroy("):
+                if (hbnb[1])[-1] == ")":
+                    arg = parse((hbnb[1])[8:-1])
+                    try:
+                        del storage.all()["<{}>.{}".format(hbnb[0], arg)]
+                        storage.save()
+                    except KeyError:
+                        print("** no instance found **")
+                else:
+                    self.stdout.write('*** Unknown syntax: %s\n' % line)
+            elif hbnb[1].startswith("update("):
+                if (hbnb[1])[-1] == ")":
+                    arg = to_list(parse((hbnb[1])[6:]))
+                    if len(arg) == 3:
+                        if check_for_id(arg[0], storage.all()):
+                            obj = get_obj_from_id(arg[0], storage.all())
+                            setattr(obj, arg[1].strip(), parse(arg[2].strip()))
+                            storage.save()
+                        else:
+                            print("** no instance found **")
+                    else:
+                        print("** no instance found **")
+                else:
+                    self.stdout.write('*** Unknown syntax: %s\n' % line)
+            elif hbnb[1] == "all()":
                 self.do_all(hbnb[0])
             elif hbnb[1] == "count()":
                 self.do_count(hbnb[0])
@@ -168,6 +202,18 @@ class HBNBCommand(cmd.Cmd):
         hbnb = hbnb.strip()
         print(globals()[hbnb].inst)
 
+import ast
+
+def to_list(string):
+    """
+    Converts a string representation of a
+    list of strings to a Python list.
+    """
+    try:
+        result = list(ast.literal_eval(string))
+        return result
+    except (ValueError, SyntaxError):
+        return ([])
 
 def check_for_id(_id, obj_dict):
     """
