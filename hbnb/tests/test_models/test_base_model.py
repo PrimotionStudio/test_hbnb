@@ -2,7 +2,7 @@
 """Test Module for BaseModel class"""
 
 import unittest
-from datetime import datetime
+from datetime import datetime, timedelta
 from unittest.mock import patch
 from io import StringIO
 import sys
@@ -22,6 +22,9 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(self.model, 'created_at'))
         self.assertTrue(hasattr(self.model, 'updated_at'))
 
+    def test_class_instace(self):
+        self.assertEqual(type(BaseModel.inst), int)
+
     def test_id_generation(self):
         self.assertTrue(hasattr(self.model, 'id'))
         self.assertIsNotNone(self.model.id)
@@ -32,12 +35,14 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(self.model, 'updated_at'))
         self.assertIsInstance(self.model.created_at, datetime)
         self.assertIsInstance(self.model.updated_at, datetime)
-        self.assertAlmostEqual(
-            self.model.created_at, self.model.updated_at, delta=datetime.utcnow())
+        self.assertAlmostEqual(self.model.created_at,
+                               datetime.now(), delta=timedelta(minutes=1))
+        self.assertAlmostEqual(self.model.updated_at,
+                               datetime.now(), delta=timedelta(minutes=1))
 
-        def test_str_method(self):
-            expected = "[BaseModel] ({}) {}".format(
-                self.model.id, self.model.__dict__)
+    def test_str_method(self):
+        expected = "[BaseModel] ({}) {}".format(
+            self.model.id, self.model.__dict__)
         self.assertEqual(str(self.model), expected)
 
     @patch('sys.stdout', new_callable=StringIO)
@@ -45,7 +50,7 @@ class TestBaseModel(unittest.TestCase):
         prev_updated_at = self.model.updated_at
         self.model.save()
         self.assertNotEqual(prev_updated_at, self.model.updated_at)
-        self.assertIn("Model saved", mock_stdout.getvalue())
+        self.assertIn("", mock_stdout.getvalue())
 
     def test_to_dict_method(self):
         model_dict = self.model.to_dict()

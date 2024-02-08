@@ -2,10 +2,11 @@
 """Test module for User class"""
 
 import unittest
-from datetime import datetime
+from datetime import datetime, timedelta
 import sys
 sys.path.append('../../')
 from models.user import User
+from models.base_model import BaseModel
 
 
 class TestUser(unittest.TestCase):
@@ -15,6 +16,9 @@ class TestUser(unittest.TestCase):
 
     def tearDown(self):
         del self.user
+
+    def test_class_instace(self):
+        self.assertEqual(type(User.inst), int)
 
     def test_email_attribute(self):
         self.assertTrue(hasattr(self.user, 'email'))
@@ -44,11 +48,13 @@ class TestUser(unittest.TestCase):
         self.assertTrue(hasattr(self.user, 'updated_at'))
         self.assertIsInstance(self.user.created_at, datetime)
         self.assertIsInstance(self.user.updated_at, datetime)
-        self.assertAlmostEqual(
-            self.user.created_at, self.user.updated_at, delta=datetime.utcnow())
+        self.assertAlmostEqual(self.user.created_at,
+                               datetime.now(), delta=timedelta(minutes=1))
+        self.assertAlmostEqual(self.user.updated_at,
+                               datetime.now(), delta=timedelta(minutes=1))
 
-        def test_to_dict_method(self):
-            user_dict = self.user.to_dict()
+    def test_to_dict_method(self):
+        user_dict = self.user.to_dict()
         self.assertIsInstance(user_dict, dict)
         self.assertIn("__class__", user_dict)
         self.assertIn("id", user_dict)

@@ -2,10 +2,11 @@
 """Test module for Place class"""
 
 import unittest
-from datetime import datetime
+from datetime import datetime, timedelta
 import sys
 sys.path.append('../../')
 from models.place import Place
+from models.base_model import BaseModel
 
 
 class TestPlace(unittest.TestCase):
@@ -15,6 +16,9 @@ class TestPlace(unittest.TestCase):
 
     def tearDown(self):
         del self.place
+
+    def test_class_instace(self):
+        self.assertEqual(type(Place.inst), int)
 
     def test_city_id_attribute(self):
         self.assertTrue(hasattr(self.place, 'city_id'))
@@ -72,11 +76,13 @@ class TestPlace(unittest.TestCase):
         self.assertTrue(hasattr(self.place, 'updated_at'))
         self.assertIsInstance(self.place.created_at, datetime)
         self.assertIsInstance(self.place.updated_at, datetime)
-        self.assertAlmostEqual(
-                self.place.created_at, self.place.updated_at, delta=datetime.utcnow())
+        self.assertAlmostEqual(self.place.created_at,
+                               datetime.now(), delta=timedelta(minutes=1))
+        self.assertAlmostEqual(self.place.updated_at,
+                               datetime.now(), delta=timedelta(minutes=1))
 
-        def test_to_dict_method(self):
-            place_dict = self.place.to_dict()
+    def test_to_dict_method(self):
+        place_dict = self.place.to_dict()
         self.assertIsInstance(place_dict, dict)
         self.assertIn("__class__", place_dict)
         self.assertIn("id", place_dict)

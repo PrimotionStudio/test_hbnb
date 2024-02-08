@@ -2,10 +2,11 @@
 """Test module for Review class"""
 
 import unittest
-from datetime import datetime
+from datetime import datetime, timedelta
 import sys
 sys.path.append('../../')
 from models.review import Review
+from models.base_model import BaseModel
 
 
 class TestReview(unittest.TestCase):
@@ -15,6 +16,9 @@ class TestReview(unittest.TestCase):
 
     def tearDown(self):
         del self.review
+
+    def test_class_instace(self):
+        self.assertEqual(type(Review.inst), int)
 
     def test_place_id_attribute(self):
         self.assertTrue(hasattr(self.review, 'place_id'))
@@ -41,11 +45,13 @@ class TestReview(unittest.TestCase):
         self.assertTrue(hasattr(self.review, 'updated_at'))
         self.assertIsInstance(self.review.created_at, datetime)
         self.assertIsInstance(self.review.updated_at, datetime)
-        self.assertAlmostEqual(
-            self.review.created_at, self.review.updated_at, delta=datetime.utcnow())
+        self.assertAlmostEqual(self.review.created_at,
+                               datetime.now(), delta=timedelta(minutes=1))
+        self.assertAlmostEqual(self.review.updated_at,
+                               datetime.now(), delta=timedelta(minutes=1))
 
-        def test_to_dict_method(self):
-            review_dict = self.review.to_dict()
+    def test_to_dict_method(self):
+        review_dict = self.review.to_dict()
         self.assertIsInstance(review_dict, dict)
         self.assertIn("__class__", review_dict)
         self.assertIn("id", review_dict)
