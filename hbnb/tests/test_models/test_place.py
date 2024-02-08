@@ -90,8 +90,10 @@ class TestPlace(unittest.TestCase):
         self.assertIn("updated_at", place_dict)
         self.assertEqual(place_dict['__class__'], 'Place')
         self.assertEqual(place_dict['id'], self.place.id)
-        self.assertEqual(place_dict['created_at'], self.place.created_at.isoformat())
-        self.assertEqual(place_dict['updated_at'], self.place.updated_at.isoformat())
+        self.assertEqual(place_dict['created_at'],
+                         self.place.created_at.isoformat())
+        self.assertEqual(place_dict['updated_at'],
+                         self.place.updated_at.isoformat())
 
 
 if __name__ == '__main__':
