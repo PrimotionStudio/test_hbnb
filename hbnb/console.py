@@ -34,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
         Prints an error message when a wrong command is entered.
         """
         line = hbnb
-        hbnb = hbnb.split(".")
+        hbnb = hbnb.split(".", 1)
         if hbnb[0] in HBNBCommand.__classes:
             if hbnb[1].startswith("show("):
                 if (hbnb[1])[-1] == ")":
@@ -62,8 +62,19 @@ class HBNBCommand(cmd.Cmd):
                     if len(arg) == 3:
                         if check_for_id(arg[0], storage.all()):
                             obj = get_obj_from_id(arg[0], storage.all())
-                            setattr(obj, arg[1].strip(), parse(arg[2].strip()))
+                            setattr(obj, arg[1].strip(), parse(arg[2]))
                             storage.save()
+                        else:
+                            print("** no instance found **")
+                    elif len(arg) == 2 and isinstance(arg[1], dict):
+                        if check_for_id(arg[0], storage.all()):
+                            if len(arg[1]) != 0:
+                                obj = get_obj_from_id(arg[0], storage.all())
+                                for k, v in arg[1].items():
+                                    setattr(obj, k, v)
+                                storage.save()
+                            else:
+                                print("** no instance found **")
                         else:
                             print("** no instance found **")
                     else:
@@ -202,8 +213,6 @@ class HBNBCommand(cmd.Cmd):
         hbnb = hbnb.strip()
         print(globals()[hbnb].inst)
 
-import ast
-
 def to_list(string):
     """
     Converts a string representation of a
@@ -211,6 +220,8 @@ def to_list(string):
     """
     try:
         result = list(ast.literal_eval(string))
+        # if not all(isinstance(item, (str, int)) for item in result):
+        #     return ([])
         return result
     except (ValueError, SyntaxError):
         return ([])
