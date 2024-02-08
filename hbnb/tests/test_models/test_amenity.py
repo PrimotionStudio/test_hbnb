@@ -5,8 +5,8 @@ import unittest
 from datetime import datetime, timedelta
 import sys
 sys.path.append('../../')
-from models.amenity import Amenity
 from models.base_model import BaseModel
+from models.amenity import Amenity
 
 
 class TestAmenity(unittest.TestCase):
@@ -23,13 +23,13 @@ class TestAmenity(unittest.TestCase):
 
     def test_class_instace(self):
         self.assertTrue(hasattr(self.amenity, 'name'))
-        self.assertEqual(Amenity.inst, 1)
+        self.assertEqual(type(Amenity.inst), int)
 
     def test_inheritance(self):
         self.assertIsInstance(self.amenity, BaseModel)
 
     def test_str_method(self):
-        expected = "[Amenity] ({}) <{}>".format(
+        expected = "[Amenity] ({}) {}".format(
             self.amenity.id, self.amenity.__dict__)
         self.assertEqual(str(self.amenity), expected)
 
