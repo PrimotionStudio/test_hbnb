@@ -9,7 +9,6 @@ class Review(BaseModel):
     """
     Class representing a Review object in the database
     """
-
     inst = 0
 
     def __init__(self, place_id="", user_id="", text="", *args, **kwargs):

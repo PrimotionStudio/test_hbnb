@@ -9,7 +9,6 @@ class User(BaseModel):
     """
     Class representing a User object in the database
     """
-
     inst = 0
 
     def __init__(self, email="", password="", first_name="",

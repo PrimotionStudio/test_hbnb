@@ -9,8 +9,8 @@ class City(BaseModel):
     """
     Class representing a city object in the database
     """
-
     inst = 0
+
     def __init__(self, state_id="", name="", *args, **kwargs):
         """
         Initialize a new instance of the City class

@@ -213,6 +213,7 @@ class HBNBCommand(cmd.Cmd):
         hbnb = hbnb.strip()
         print(globals()[hbnb].inst)
 
+
 def to_list(string):
     """
     Converts a string representation of a
@@ -225,6 +226,7 @@ def to_list(string):
         return result
     except (ValueError, SyntaxError):
         return ([])
+
 
 def check_for_id(_id, obj_dict):
     """
