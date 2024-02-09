@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """Test module for Amenity class"""
-
+import sys
+sys.path.append("../")
+import models
 from models.base_model import BaseModel
 import unittest
 from models.amenity import Amenity
